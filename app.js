@@ -1,41 +1,42 @@
-// Example survey questions
-const questions = [
-  "What’s your favourite color?",
-  "What city were you born in?",
-  "What’s your dream job?"
-];
+// Import Firebase SDK
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore"; 
+import { getAnalytics } from "firebase/analytics";
 
-let currentQuestion = 0;
-let balance = 0;
+// Your Firebase config (from your Firebase console)
+const firebaseConfig = {
+  apiKey: "AIzaSyCd8ff1xgSD11clngTNDBKC1ypkqwFdfIg",
+  authDomain: "learnearn-9fd5f.firebaseapp.com",
+  projectId: "learnearn-9fd5f",
+  storageBucket: "learnearn-9fd5f.firebasestorage.app",
+  messagingSenderId: "789092873831",
+  appId: "1:789092873831:web:68ff51b4a6e1bb0c5ac6c2",
+  measurementId: "G-HDWYLMFBEE"
+};
 
-// Display the first question
-function showQuestion() {
-  document.getElementById("question").innerText = questions[currentQuestion];
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
-function submitAnswer() {
-  const input = document.getElementById("answerInput");
-  const answer = input.value.trim();
+// Handle survey form submission
+document.getElementById("survey-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  if (answer !== "") {
-    balance += 5; // Add £5 for each answer
-    document.getElementById("balanceDisplay").innerText = `Balance: £${balance}`;
+  const question = document.getElementById("question").innerText;
+  const answer = document.getElementById("answer").value;
 
-    // Go to next question
-    currentQuestion++;
-    if (currentQuestion < questions.length) {
-      showQuestion();
-      input.value = "";
-    } else {
-      document.getElementById("question").innerText = "You’ve completed the survey!";
-      input.style.display = "none";
-      document.getElementById("submitAnswer").style.display = "none";
-    }
+  try {
+    await addDoc(collection(db, "surveys"), {
+      question: question,
+      answer: answer,
+      timestamp: new Date()
+    });
+
+    alert("✅ Survey saved successfully!");
+    document.getElementById("answer").value = ""; // clear input
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    alert("❌ Failed to save survey. Check console.");
   }
-}
-
-// Hook up the button
-document.getElementById("submitAnswer").addEventListener("click", submitAnswer);
-
-// Show first question when page loads
-showQuestion();
+});
