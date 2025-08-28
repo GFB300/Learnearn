@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learnearn Interactive</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learnearn</title>
 </head>
 <body>
-<h1>Learnearn Interactive</h1>
-<p>Choose a start amount and complete surveys to earn rewards!</p>
+  <h1>Welcome to Learnearn</h1>
+  <p>Fill out the survey to earn rewards!</p>
 
-<button id="startZero">Start from £0</button>
-<button id="startFive">Start from £5</button>
+  <form id="surveyForm">
+    <label for="name">Full Name:</label><br>
+    <input type="text" id="name" required><br><br>
 
-<div id="surveySection" style="display:none;">
-  <p id="question"></p>
-  <input type="text" id="answerInput" placeholder="Type your answer">
-  <button id="submitAnswer">Submit Answer</button>
-</div>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" required><br><br>
 
-<p id="message"></p>
+    <label for="answer">Answer to Survey Question:</label><br>
+    <input type="text" id="answer" required><br><br>
 
-<script src="app.js"></script>
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <!-- App JS -->
+  <script type="module" src="app.js"></script>
 </body>
 </html>
