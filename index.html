@@ -3,15 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learnearn Prototype</title>
+<title>Learnearn Interactive</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Learnearn Prototype</h1>
-<p>Start from £0 → earn £5, or start from £5 → earn £15.</p>
+<h1>Learnearn Interactive</h1>
+<p>Choose a start amount and complete surveys to earn rewards!</p>
 
 <button id="startZero">Start from £0</button>
 <button id="startFive">Start from £5</button>
+
+<div id="surveySection" style="display:none;">
+  <p id="question"></p>
+  <input type="text" id="answerInput" placeholder="Type your answer">
+  <button id="submitAnswer">Submit Answer</button>
+</div>
 
 <p id="message"></p>
 
