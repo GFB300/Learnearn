@@ -1,28 +1,4 @@
-const message = document.getElementById("message");
-const surveySection = document.getElementById("surveySection");
-const questionEl = document.getElementById("question");
-const answerInput = document.getElementById("answerInput");
-const submitAnswer = document.getElementById("submitAnswer");
-
-let userStart = 0;
-let reward = 0;
-let currentQuestion = 0;
-
-const questions = [
-  { q: "What is 2 + 2?", a: "4" },
-  { q: "Capital of UK?", a: "London" },
-  { q: "What is 5 x 3?", a: "15" }
-];
-
-document.getElementById("startZero").addEventListener("click", () => {
-    userStart = 0;
-    reward = 5;
-    startSurvey();
-});
-
-document.getElementById("startFive").addEventListener("click", () => {
-    userStart = 5;
-    reward = 15;
+ 
     startSurvey();
 });
 
