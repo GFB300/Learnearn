@@ -1,42 +1,42 @@
-// Import Firebase SDK
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore"; 
-import { getAnalytics } from "firebase/analytics";
+// Import Firebase SDKs
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
-// Your Firebase config (from your Firebase console)
+// Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCd8ff1xgSD11clngTNDBKC1ypkqwFdfIg",
   authDomain: "learnearn-9fd5f.firebaseapp.com",
   projectId: "learnearn-9fd5f",
-  storageBucket: "learnearn-9fd5f.firebasestorage.app",
+  storageBucket: "learnearn-9fd5f.appspot.com",
   messagingSenderId: "789092873831",
   appId: "1:789092873831:web:68ff51b4a6e1bb0c5ac6c2",
   measurementId: "G-HDWYLMFBEE"
 };
 
-// Initialize Firebase
+// Init Firebase + Firestore
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
-// Handle survey form submission
-document.getElementById("survey-form").addEventListener("submit", async (e) => {
+// Form handling
+const form = document.getElementById("survey-form");
+const statusEl = document.getElementById("status");
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const question = document.getElementById("question").innerText;
   const answer = document.getElementById("answer").value;
 
   try {
-    await addDoc(collection(db, "surveys"), {
-      question: question,
+    await addDoc(collection(db, "surveyResponses"), {
+      question: document.getElementById("question").innerText,
       answer: answer,
       timestamp: new Date()
     });
 
-    alert("✅ Survey saved successfully!");
-    document.getElementById("answer").value = ""; // clear input
-  } catch (error) {
-    console.error("Error adding document: ", error);
-    alert("❌ Failed to save survey. Check console.");
+    statusEl.innerText = "✅ Survey completed!";
+    form.reset();
+  } catch (err) {
+    console.error("Error writing to Firestore: ", err);
+    statusEl.innerText = "❌ Error saving response.";
   }
 });
